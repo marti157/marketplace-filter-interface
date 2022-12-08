@@ -1,9 +1,17 @@
 {
   "env": {
-    "es2021": true
+    "es2021": true,
+    "browser": true,
+    "node": true
   },
   "extends": ["plugin:react/recommended", "airbnb", "prettier"],
-  "plugins": ["react"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
   "rules": {
     "max-len": [
       1,
@@ -12,6 +20,7 @@
         "ignoreComments": true
       }
     ],
+    "import/extensions": 0,
     "react/jsx-filename-extension": 0,
     "react/destructuring-assignment": 0,
     "react/prop-types": 0,
