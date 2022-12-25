@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import config from '../../config.js';
 import Header from '../components/header.jsx';
+import { request, handleRequestError } from '../utils/request.js';
 
 function Carousel({ images, activeStep, handleStepChange = () => {} }) {
   return (
@@ -26,7 +27,9 @@ function Carousel({ images, activeStep, handleStepChange = () => {} }) {
                   overflow: 'hidden',
                   width: '100%',
                 }}
-                src={`${config.API_URI}/images/${image}`}
+                src={`${
+                  config.API_URI === 'self' ? `${window.location.origin}/api/..` : config.API_URI
+                }/images/${image}`}
               />
             ) : null}
           </Fragment>
@@ -80,11 +83,11 @@ export default function Item() {
   const [item, setItem] = useState({});
 
   const loadItem = () =>
-    fetch(`${config.API_URI}/items/${itemId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setItem(data);
-      });
+    request({ method: 'get', uri: `/items/${itemId}` })
+      .then((response) => {
+        setItem(response.data);
+      })
+      .catch(handleRequestError);
 
   useEffect(() => {
     loadItem().then(() => setLoading(false));

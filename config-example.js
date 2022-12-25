@@ -1,5 +1,4 @@
 export default {
-  API_URI: 'http://localhost:3000',
-  PORT: 5000,
+  API_URI: 'self',
   TITLE: 'interface',
 };
